@@ -6,29 +6,29 @@ close all;
 load('feat.mat');
 %% Part 2
 
-% im(1).data = readim(['cloth.im']);
-% im(2).data = readim(['cotton.im']);
-% im(3).data = readim(['grass.im']);
-% im(4).data = readim(['pigskin.im']);
-% im(5).data = readim(['wood.im']);
-% im(6).data = readim(['cork.im']);
-% im(7).data = readim(['paper.im']);
-% im(8).data = readim(['stone.im']);
-% im(9).data = readim(['raiffa.im']);
-% im(10).data = readim(['face.im']);
+im(1).data = readim(['cloth.im']);
+im(2).data = readim(['cotton.im']);
+im(3).data = readim(['grass.im']);
+im(4).data = readim(['pigskin.im']);
+im(5).data = readim(['wood.im']);
+im(6).data = readim(['cork.im']);
+im(7).data = readim(['paper.im']);
+im(8).data = readim(['stone.im']);
+im(9).data = readim(['raiffa.im']);
+im(10).data = readim(['face.im']);
 
-% for i_n = 1:10
-%     figure(i_n)
-%     imagesc(im(i_n).data)
-%     colormap(gray)
-% end
+for i_n = 1:10
+    figure(i_n)
+    imagesc(im(i_n).data)
+    colormap(gray)
+end
 
-% % figure(11)
-% % aplot(f2)
-% % figure(12)
-% % aplot(f8)
-% % figure(13)
-% % aplot(f32)
+figure(11)
+aplot(f2)
+figure(12)
+aplot(f8)
+figure(13)
+aplot(f32)
 
 %% Part 3
 % res = 2
@@ -63,7 +63,7 @@ end
 
 % res = 8
 
-MICDClassifier_2 = MICDClassifier(f2);
+MICDClassifier_2 = MICDClassifier(f8);
 counter = 1;
 p = 1;
 for i = 1:160
@@ -98,7 +98,7 @@ end
 
 % res = 32
 
-MICDClassifier_3 = MICDClassifier(f2);
+MICDClassifier_3 = MICDClassifier(f32);
 counter = 1;
 p = 1;
 for i = 1:160
@@ -154,10 +154,10 @@ for i = 1:256
     end
 end
 
-figure(1)
+figure(14)
 imagesc(cimage);
 colormap(gray)
-figure(2)
+figure(15)
 imagesc(multim);
 colormap(gray)
 
@@ -187,7 +187,7 @@ for i = 1:k
     end
 end
     
-figure(3)
+figure(16)
 scatter(means(1,:), means(2,:), 'r');
 hold on
 scatter(f32(1,:), f32(2,:), 'b');
