@@ -192,3 +192,5 @@ scatter(means(1,:), means(2,:), 'r');
 hold on
 scatter(f32(1,:), f32(2,:), 'b');
 
+%% Fuzzy k-mean
+[center,u]=fcm(f32,2);
