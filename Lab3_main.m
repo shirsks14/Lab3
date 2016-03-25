@@ -6,16 +6,16 @@ close all;
 load('feat.mat');
 %% Part 2
 
-im(1).data = readim(['cloth.im']);
-im(2).data = readim(['cotton.im']);
-im(3).data = readim(['grass.im']);
-im(4).data = readim(['pigskin.im']);
-im(5).data = readim(['wood.im']);
-im(6).data = readim(['cork.im']);
-im(7).data = readim(['paper.im']);
-im(8).data = readim(['stone.im']);
-im(9).data = readim(['raiffa.im']);
-im(10).data = readim(['face.im']);
+% im(1).data = readim(['cloth.im']);
+% im(2).data = readim(['cotton.im']);
+% im(3).data = readim(['grass.im']);
+% im(4).data = readim(['pigskin.im']);
+% im(5).data = readim(['wood.im']);
+% im(6).data = readim(['cork.im']);
+% im(7).data = readim(['paper.im']);
+% im(8).data = readim(['stone.im']);
+% im(9).data = readim(['raiffa.im']);
+% im(10).data = readim(['face.im']);
 
 % for i_n = 1:10
 %     figure(i_n)
@@ -160,3 +160,35 @@ colormap(gray)
 figure(2)
 imagesc(multim);
 colormap(gray)
+
+%% Part 5
+
+k = 10;
+random = randi(160, 10, 1);
+allPoints = zeros(2,10);
+NoofPoints = zeros(1,10);
+for i = 1:k
+    means(:,i) = [f32(1,random(i)) f32(2,random(i))]';
+end
+
+for i = 1:160
+    point = [f32(1,i), f32(2,i)]';
+    class = Lab3Utils.ClassifyClass(means,point);
+    allPoints(:,class) = allPoints(class) + point;
+    NoofPoints(class) = NoofPoints(class)+1;
+end
+
+for i = 1:k
+    N = NoofPoints(i);
+    if(N ~= 0)
+        means(:,i) = [allPoints(1,i)/N allPoints(2,i)/N]';
+    else
+        means(:,i) = [0 0]';
+    end
+end
+    
+figure(3)
+scatter(means(1,:), means(2,:), 'r');
+hold on
+scatter(f32(1,:), f32(2,:), 'b');
+
