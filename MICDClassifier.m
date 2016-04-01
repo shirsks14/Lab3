@@ -43,7 +43,7 @@ classdef MICDClassifier
         function Y = Classify(obj, point)
         distances = [];
         for i = 1: 10
-           distances(i) = (point-obj.Mus(:,i))'*inv(obj.covs{i})*(point - obj.Mus(:,i));  
+           distances(i) = (point - obj.Mus(:,i))'*inv(obj.covs{i})*(point - obj.Mus(:,i)); 
         end
         [~, Y] = min(distances);
     end

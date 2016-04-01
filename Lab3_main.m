@@ -162,31 +162,35 @@ imagesc(multim);
 colormap(gray)
 
 %% Part 5
-
+% close all % temp close
 k = 10;
-random = randi(160, 10, 1);
+random = randperm(160, 10);
 allPoints = zeros(2,10);
 NoofPoints = zeros(1,10);
+old_means = zeros(2,10);
+means = zeros(2,10);
 for i = 1:k
     means(:,i) = [f32(1,random(i)) f32(2,random(i))]';
 end
 
-for i = 1:160
-    point = [f32(1,i), f32(2,i)]';
-    class = Lab3Utils.ClassifyClass(means,point);
-    allPoints(:,class) = allPoints(class) + point;
-    NoofPoints(class) = NoofPoints(class)+1;
-end
-
-for i = 1:k
-    N = NoofPoints(i);
-    if(N ~= 0)
-        means(:,i) = [allPoints(1,i)/N allPoints(2,i)/N]';
-    else
-        means(:,i) = [0 0]';
+% for i = 1:k
+%     means(:,i) = [f32(1,i) f32(2,i)]';
+% end
+count = 1;
+while((Lab3Utils.SimilarMeans(old_means,means)) && (count <= 20))
+    for i = 1:160
+        point = [f32(1,i), f32(2,i)]';
+        class = Lab3Utils.ClassifyClass(means,point);
+        allPoints(:,class) = allPoints(:,class) + point;
+        NoofPoints(class) = NoofPoints(class)+1;
     end
+    old_means = means;
+    for i = 1:k
+        N = NoofPoints(i);
+        means(:,i) = [allPoints(1,i)/N allPoints(2,i)/N]';
+    end
+    count = count +1;
 end
-    
 figure(3)
 scatter(means(1,:), means(2,:), 'r');
 hold on
