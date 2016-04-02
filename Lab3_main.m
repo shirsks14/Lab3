@@ -199,4 +199,33 @@ hold on
 scatter(f32(1,:), f32(2,:), 'b');
 
 %% Fuzzy k-mean
-% [center,u]=fcm(f32,2);
+options = [2 10 0.001 1];
+temp_f32 = [f32(1,:); f32(2,:)]';
+[centers,U, objFun]=fcm(temp_f32,10, options);
+% maxU = max(U);
+% index1 = find(U(1,:) == maxU);
+% index2 = find(U(2,:) == maxU);
+% index3 = find(U(3,:) == maxU);
+% index4 = find(U(4,:) == maxU);
+% index5 = find(U(5,:) == maxU);
+% index6 = find(U(6,:) == maxU);
+% index7 = find(U(7,:) == maxU);
+% index8 = find(U(8,:) == maxU);
+% index9 = find(U(9,:) == maxU);
+% index10 = find(U(10,:) == maxU);
+centers = centers';
+figure (17)
+scatter(f32(1,:), f32(2,:), 'b');
+hold on
+scatter(centers(1,:), centers(2,:), 'r');
+% plot(centers(1,1),centers(1,2),'xr')
+% plot(centers(2,1),centers(2,2),'xr')
+% plot(centers(3,1),centers(3,2),'xr')
+% plot(centers(4,1),centers(4,2),'xr')
+% plot(centers(5,1),centers(5,2),'xr')
+% plot(centers(6,1),centers(6,2),'xr')
+% plot(centers(7,1),centers(7,2),'xr')
+% plot(centers(8,1),centers(8,2),'xr')
+% plot(centers(9,1),centers(9,2),'xr')
+% plot(centers(10,1),centers(10,2),'xr')
+% hold off;
