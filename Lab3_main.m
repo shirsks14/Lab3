@@ -6,29 +6,29 @@ close all;
 load('feat.mat');
 %% Part 2
 
-im(1).data = readim(['cloth.im']);
-im(2).data = readim(['cotton.im']);
-im(3).data = readim(['grass.im']);
-im(4).data = readim(['pigskin.im']);
-im(5).data = readim(['wood.im']);
-im(6).data = readim(['cork.im']);
-im(7).data = readim(['paper.im']);
-im(8).data = readim(['stone.im']);
-im(9).data = readim(['raiffa.im']);
-im(10).data = readim(['face.im']);
+% im(1).data = readim(['cloth.im']);
+% im(2).data = readim(['cotton.im']);
+% im(3).data = readim(['grass.im']);
+% im(4).data = readim(['pigskin.im']);
+% im(5).data = readim(['wood.im']);
+% im(6).data = readim(['cork.im']);
+% im(7).data = readim(['paper.im']);
+% im(8).data = readim(['stone.im']);
+% im(9).data = readim(['raiffa.im']);
+% im(10).data = readim(['face.im']);
 
-for i_n = 1:10
-    figure(i_n)
-    imagesc(im(i_n).data)
-    colormap(gray)
-end
-
-figure(11)
-aplot(f2)
-figure(12)
-aplot(f8)
-figure(13)
-aplot(f32)
+% for i_n = 1:10
+%     figure(i_n)
+%     imagesc(im(i_n).data)
+%     colormap(gray)
+% end
+% 
+% figure(11)
+% aplot(f2)
+% figure(12)
+% aplot(f8)
+% figure(13)
+% aplot(f32)
 
 %% Part 3
 % res = 2
@@ -162,35 +162,41 @@ imagesc(multim);
 colormap(gray)
 
 %% Part 5
-
+% close all % temp close
 k = 10;
-random = randi(160, 10, 1);
+random = randperm(160, 10);
 allPoints = zeros(2,10);
 NoofPoints = zeros(1,10);
+old_means = zeros(2,10);
+means = zeros(2,10);
 for i = 1:k
     means(:,i) = [f32(1,random(i)) f32(2,random(i))]';
 end
 
-for i = 1:160
-    point = [f32(1,i), f32(2,i)]';
-    class = Lab3Utils.ClassifyClass(means,point);
-    allPoints(:,class) = allPoints(class) + point;
-    NoofPoints(class) = NoofPoints(class)+1;
+% for i = 1:k
+%     means(:,i) = [f32(1,i) f32(2,i)]';
+% end
+count = 1;
+while((Lab3Utils.SimilarMeans(old_means,means)) && (count <= 20))
+    for i = 1:160
+        point = [f32(1,i), f32(2,i)]';
+        class = Lab3Utils.ClassifyClass(means,point);
+        allPoints(:,class) = allPoints(:,class) + point;
+        NoofPoints(class) = NoofPoints(class)+1;
+    end
+    old_means = means;
+    for i = 1:k
+        N = NoofPoints(i);
+        means(:,i) = [allPoints(1,i)/N allPoints(2,i)/N]';
+    end
+    count = count +1;
 end
 
-for i = 1:k
-    N = NoofPoints(i);
-    if(N ~= 0)
-        means(:,i) = [allPoints(1,i)/N allPoints(2,i)/N]';
-    else
-        means(:,i) = [0 0]';
-    end
-end
-    
+
 figure(16)
 scatter(means(1,:), means(2,:), 'r');
 hold on
 scatter(f32(1,:), f32(2,:), 'b');
 
 %% Fuzzy k-mean
-[center,u]=fcm(f32,2);
+% [center,u]=fcm(f32,2);
